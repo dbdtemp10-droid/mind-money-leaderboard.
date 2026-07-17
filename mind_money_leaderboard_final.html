@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind & Money Challenge | The Arena of Truth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-deep: #05060a;
+            --bg-card: rgba(18, 20, 26, 0.6);
+            --bg-card-hover: rgba(26, 29, 38, 0.9);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(212, 175, 55, 0.35);
+            --gold: #e5c158;
+            --gold-2: #ffe29a;
+            --gold-dim: rgba(229, 193, 88, 0.15);
+            --green: #10e08a;
+            --green-dim: rgba(16, 224, 138, 0.14);
+            --red: #ff5c6c;
+            --red-dim: rgba(255, 92, 108, 0.14);
+            --neutral-dim: rgba(156, 163, 175, 0.15);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 80px;
+        }
+
+        .glow-bg-1, .glow-bg-2, .glow-bg-3 { position: fixed; border-radius: 50%; filter: blur(150px); z-index: -1; pointer-events: none; }
+        .glow-bg-1 { top: -200px; left: 50%; width: 700px; height: 700px; transform: translateX(-50%); background: radial-gradient(circle, rgba(229, 193, 88, 0.12) 0%, rgba(0,0,0,0) 70%); }
+        .glow-bg-2 { bottom: 5%; right: -200px; width: 650px; height: 650px; background: radial-gradient(circle, rgba(16, 224, 138, 0.08) 0%, rgba(0,0,0,0) 70%); }
+        .glow-bg-3 { top: 30%; left: -250px; width: 550px; height: 550px; background: radial-gradient(circle, rgba(255, 92, 108, 0.06) 0%, rgba(0,0,0,0) 70%); }
+
+        .container { max-width: 980px; margin: 0 auto; padding: 40px 20px; }
+
+        .brand-header { text-align: center; margin-bottom: 40px; position: relative; padding-bottom: 32px; border-bottom: 1px solid var(--border-subtle); }
+        .brand-subtitle { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); font-weight: 700; margin-bottom: 12px; display: block; }
+        .brand-title { font-size: clamp(2rem, 4.5vw, 3.1rem); font-weight: 900; letter-spacing: -1.5px; background: linear-gradient(135deg, #ffffff 0%, var(--gold-2) 60%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+        .brand-tagline { font-size: 1.1rem; color: var(--text-muted); font-style: italic; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+        .challenge-hero { text-align: center; margin-bottom: 40px; }
+        .live-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-dim); border: 1px solid var(--border-glow); padding: 6px 18px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+        .pulse-dot { width: 8px; height: 8px; background-color: var(--gold); border-radius: 50%; box-shadow: 0 0 8px var(--gold); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 12px var(--gold); } 100% { transform: scale(0.95); opacity: 0.8; } }
+
+        h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 14px; background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--text-muted); font-size: 1rem; max-width: 640px; margin: 0 auto; line-height: 1.7; }
+
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 45px; }
+        .metric-card { background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 22px; border-radius: 16px; backdrop-filter: blur(12px); text-align: center; transition: transform 0.2s, border-color 0.2s; }
+        .metric-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.2); }
+        .metric-val { font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+        .metric-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
+
+        /* PODIUM */
+        .podium-title { text-align: center; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2.5px; color: var(--text-muted); margin-bottom: 20px; font-weight: 700; }
+        .podium { display: grid; grid-template-columns: 1fr 1.25fr 1fr; align-items: end; gap: 14px; max-width: 760px; margin: 0 auto 55px; }
+        .podium-card { position: relative; border-radius: 18px; padding: 26px 14px 20px; text-align: center; backdrop-filter: blur(12px); border: 1px solid var(--border-subtle); overflow: hidden; transition: transform 0.25s ease; }
+        .podium-card.rank1 { background: linear-gradient(160deg, rgba(229,193,88,0.28) 0%, rgba(18,20,26,0.8) 100%); border-color: rgba(229,193,88,0.6); border-width: 2px; order: 2; padding: 44px 16px 28px; transform: scale(1.12); box-shadow: 0 0 55px -8px rgba(229,193,88,0.5); z-index: 2; }
+        .podium-card.rank2 { background: linear-gradient(160deg, rgba(200,200,210,0.14) 0%, rgba(18,20,26,0.75) 100%); border-color: rgba(200,200,210,0.35); order: 1; }
+        .podium-card.rank3 { background: linear-gradient(160deg, rgba(205,127,50,0.16) 0%, rgba(18,20,26,0.75) 100%); border-color: rgba(205,127,50,0.4); order: 3; transform: scale(0.9); padding: 20px 12px 16px; }
+        .podium-medal { font-size: 1.9rem; margin-bottom: 8px; }
+        .podium-card.rank1 .podium-medal { font-size: 2.8rem; }
+        .podium-card.rank3 .podium-medal { font-size: 1.5rem; }
+        .podium-name { font-weight: 800; font-size: 1rem; margin-bottom: 6px; }
+        .podium-card.rank1 .podium-name { font-size: 1.25rem; }
+        .podium-card.rank3 .podium-name { font-size: 0.85rem; }
+        .podium-pnl { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 1.15rem; }
+        .podium-card.rank1 .podium-pnl { font-size: 1.5rem; }
+        .podium-card.rank3 .podium-pnl { font-size: 0.95rem; }
+        .podium-rank-tag { position: absolute; top: 10px; left: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); opacity: 0.7; }
+
+        .sparkle { position: absolute; pointer-events: none; font-size: 1rem; opacity: 0; animation: sparkle-anim 1.8s ease-in-out infinite; }
+        .sparkle:nth-child(1) { top: 6%; left: 10%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 15%; right: 8%; animation-delay: 0.4s; }
+        .sparkle:nth-child(3) { top: 55%; left: 4%; animation-delay: 0.9s; }
+        .sparkle:nth-child(4) { top: 65%; right: 6%; animation-delay: 1.3s; }
+        .sparkle:nth-child(5) { top: 2%; left: 48%; animation-delay: 0.6s; }
+        @keyframes sparkle-anim {
+            0% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.1) rotate(180deg); }
+            100% { opacity: 0; transform: scale(0.4) rotate(360deg); }
+        }
+        .crown-float { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 1.6rem; animation: float-crown 2.2s ease-in-out infinite; }
+        @keyframes float-crown { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-6px); } }
+
+        .arena-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; padding: 0 4px; }
+        .arena-title { font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .filter-tabs { display: flex; gap: 8px; background: rgba(255,255,255,0.03); padding: 6px; border-radius: 12px; border: 1px solid var(--border-subtle); flex-wrap: wrap; }
+        .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 8px 16px; font-size: 0.85rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .tab-btn:hover { color: var(--text-main); }
+        .tab-btn.active { background: var(--text-main); color: var(--bg-deep); }
+
+        .list-header { display: grid; grid-template-columns: 70px 2fr 1.5fr 1.5fr; padding: 0 24px 12px 24px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); font-weight: 700; }
+
+        .leaderboard-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 60px; }
+
+        .row-card { display: grid; grid-template-columns: 70px 2fr 1.5fr 1.5fr; align-items: center; background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 18px 24px; border-radius: 14px; backdrop-filter: blur(12px); transition: all 0.25s ease; animation: fadeIn 0.4s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .row-card:hover { background: var(--bg-card-hover); border-color: rgba(255,255,255,0.22); transform: scale(1.01); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6); }
+        .row-card.rank-top { border-left: 4px solid var(--gold); background: linear-gradient(90deg, rgba(229, 193, 88, 0.12) 0%, rgba(18, 20, 26, 0.7) 100%); }
+
+        .rank-num { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 1.15rem; color: var(--text-muted); }
+        .rank-top .rank-num { color: var(--gold); }
+
+        .trader-info { display: flex; align-items: center; gap: 12px; }
+        .avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; flex-shrink: 0; background: linear-gradient(135deg, rgba(229,193,88,0.35), rgba(16,224,138,0.15)); color: var(--text-main); border: 1px solid var(--border-subtle); }
+        .trader-name { font-weight: 700; font-size: 1.02rem; color: var(--text-main); display: flex; flex-direction: column; }
+        .role-badge { font-size: 0.62rem; background: rgba(255,255,255,0.06); color: var(--text-muted); padding: 2px 7px; border-radius: 4px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; width: fit-content; margin-top: 4px; }
+
+        .pnl-val { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 1.12rem; display: flex; align-items: center; gap: 6px; }
+        .pnl-green { color: var(--green); }
+        .pnl-red { color: var(--red); }
+        .pnl-neutral { color: var(--text-main); }
+        .pnl-arrow { font-size: 0.9rem; }
+
+        .status-badge { display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; width: fit-content; }
+        .status-verified { background: var(--green-dim); color: var(--green); border: 1px solid rgba(16, 224, 138, 0.3); }
+        .status-honest { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(229, 193, 88, 0.3); }
+        .status-neutral { background: var(--neutral-dim); color: var(--text-main); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+        .code-box { background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 45px; text-align: center; max-width: 780px; margin: 0 auto; position: relative; overflow: hidden; }
+        .code-box::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 180px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        .code-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); margin-bottom: 18px; font-weight: 700; }
+        .code-quote { font-size: 1.2rem; color: var(--text-main); font-style: italic; line-height: 1.8; margin-bottom: 18px; }
+        .code-sub { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; }
+
+        @media (max-width: 768px) {
+            .list-header { display: none; }
+            .podium { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+            .podium-card { padding: 18px 8px 14px; }
+            .podium-card.rank1 { padding-top: 26px; }
+            .podium-name { font-size: 0.82rem; }
+            .podium-pnl { font-size: 0.92rem; }
+            .row-card { grid-template-columns: 40px 1fr auto; gap: 12px; padding: 14px 16px; }
+            .status-badge { grid-column: 2 / span 2; margin-top: 6px; }
+            .pnl-val { justify-content: flex-end; }
+            .role-badge { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-bg-1"></div>
+    <div class="glow-bg-2"></div>
+    <div class="glow-bg-3"></div>
+
+    <div class="container">
+
+        <div class="brand-header">
+            <span class="brand-subtitle">Divya Biharini Das</span>
+            <h1 class="brand-title">Biharidas Trading</h1>
+            <p class="brand-tagline">"Where Spirituality and Science blend to make you a better trader."</p>
+        </div>
+
+        <div class="challenge-hero">
+            <div class="live-pill">
+                <span class="pulse-dot"></span>
+                <span>SAMARPIT-CHALLENGER ARENA</span>
+            </div>
+            <h2>Mind & Money Challenge</h2>
+            <p class="subtitle">This is not a space for noise, tips, or strategy begging. We operate between ₹50k–₹1L capital, face the mirror of our authentic PnL, and master psychology through public responsibility.</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-val">₹50k - ₹1L</div>
+                <div class="metric-label">Capital Bracket</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-val">19</div>
+                <div class="metric-label">Active Challengers</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-val" style="color: var(--gold);">100%</div>
+                <div class="metric-label">Authentic PnL Posted</div>
+            </div>
+        </div>
+
+        <div class="podium-title">This Week's Top Performers</div>
+        <div class="podium" id="podium-container"></div>
+
+        <div class="arena-header">
+            <div class="arena-title">
+                <span>Leaderboard Standings</span>
+            </div>
+            <div class="filter-tabs">
+                <button class="tab-btn active" onclick="filterData('all', this)">All Challengers</button>
+                <button class="tab-btn" onclick="filterData('green', this)">Net Green</button>
+                <button class="tab-btn" onclick="filterData('honest', this)">Honest Losses</button>
+            </div>
+        </div>
+
+        <div class="list-header">
+            <div>Rank</div>
+            <div>Challenger</div>
+            <div>Authentic PnL</div>
+            <div>Discipline Status</div>
+        </div>
+
+        <div class="leaderboard-list" id="board-container"></div>
+
+        <div class="code-box">
+            <div class="code-title">The Code of Samarpit</div>
+            <div class="code-quote">"You have a right to perform your prescribed duty, but you are not entitled to the fruits of action."</div>
+            <p class="code-sub">We do not judge a trader by a single green day, nor do we condemn them for a red one. An authentic loss posted with strict risk ownership is a victory of inner discipline over ego. Protect your capital. Honor your word. Face the mirror.</p>
+        </div>
+    </div>
+
+    <script>
+        const traders = [
+            { rank: "01", name: "Sneha", pnl: "+ ₹12,122", pnlNumeric: 12122, statusText: "100% Verified", statusType: "verified" },
+            { rank: "02", name: "Govind Yadav", pnl: "+ ₹11,912", pnlNumeric: 11912, statusText: "100% Verified", statusType: "verified" },
+            { rank: "03", name: "Salender Singh", pnl: "+ ₹6,890", pnlNumeric: 6890, statusText: "100% Verified", statusType: "verified" },
+            { rank: "04", name: "Nishi", pnl: "+ ₹6,193", pnlNumeric: 6193, statusText: "100% Verified", statusType: "verified" },
+            { rank: "05", name: "Sudhakar", pnl: "+ ₹1,524", pnlNumeric: 1524, statusText: "100% Verified", statusType: "verified" },
+            { rank: "06", name: "Sachin Patel", pnl: "+ ₹1,261", pnlNumeric: 1261, statusText: "100% Verified", statusType: "verified" },
+            { rank: "07", name: "Dr Pritesh", pnl: "+ ₹1,157", pnlNumeric: 1157, statusText: "100% Verified", statusType: "verified" },
+            { rank: "08", name: "Waseem", pnl: "+ ₹760", pnlNumeric: 760, statusText: "100% Verified", statusType: "verified" },
+            { rank: "09", name: "Ibhrahim", pnl: "- ₹90", pnlNumeric: -90, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "10", name: "Pratik Nigade", pnl: "- ₹734", pnlNumeric: -734, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "11", name: "Vishi", pnl: "- ₹800", pnlNumeric: -800, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "12", name: "Shrihari", pnl: "- ₹1,216", pnlNumeric: -1216, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "13", name: "Anjana Thakur", pnl: "- ₹1,481", pnlNumeric: -1481, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "14", name: "Ashok Gehlot", pnl: "- ₹2,620", pnlNumeric: -2620, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "15", name: "Aakaash Jw", pnl: "- ₹3,108", pnlNumeric: -3108, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "16", name: "Karan", pnl: "- ₹4,816", pnlNumeric: -4816, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "17", name: "Rahul Kushwaha", pnl: "₹0", pnlNumeric: 0, statusText: "No-Trade", statusType: "neutral" },
+            { rank: "18", name: "Nikhil Bansal", pnl: "- ₹9,088", pnlNumeric: -9088, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "19", name: "Divya Biharini Das", pnl: "₹24,745", pnlNumeric: 24745, statusText: "100% Verified", statusType: "verified" },
+        ];
+
+        function initials(name) {
+            return name.split(' ').filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join('');
+        }
+
+        function renderPodium() {
+            const sorted = [...traders].filter(t => t.name !== "Divya Biharini Das").sort((a,b) => b.pnlNumeric - a.pnlNumeric).slice(0,3);
+            const medals = ['🥇','🥈','🥉'];
+            const classes = ['rank1','rank2','rank3'];
+            const container = document.getElementById('podium-container');
+            container.innerHTML = '';
+            sorted.forEach((t, i) => {
+                const pnlClass = t.pnlNumeric > 0 ? 'pnl-green' : (t.pnlNumeric < 0 ? 'pnl-red' : 'pnl-neutral');
+                const card = document.createElement('div');
+                card.className = `podium-card ${classes[i]}`;
+                const sparkles = i === 0 ? `
+                    <span class="crown-float">👑</span>
+                    <span class="sparkle">✨</span>
+                    <span class="sparkle">✨</span>
+                    <span class="sparkle">✨</span>
+                    <span class="sparkle">✨</span>
+                    <span class="sparkle">✨</span>
+                ` : '';
+                card.innerHTML = `
+                    ${sparkles}
+                    <span class="podium-rank-tag">#${i+1}</span>
+                    <div class="podium-medal">${medals[i]}</div>
+                    <div class="podium-name">${t.name}</div>
+                    <div class="podium-pnl ${pnlClass}">${t.pnl}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderBoard(data) {
+            const container = document.getElementById('board-container');
+            container.innerHTML = '';
+
+            data.forEach((trader, index) => {
+                let pnlClass = 'pnl-neutral';
+                let arrow = '';
+                if (trader.pnlNumeric > 0) { pnlClass = 'pnl-green'; arrow = '▲'; }
+                if (trader.pnlNumeric < 0) { pnlClass = 'pnl-red'; arrow = '▼'; }
+
+                const rankTopClass = (index === 0 || index === 1 || index === 2) ? 'rank-top' : '';
+
+                const row = document.createElement('div');
+                row.className = `row-card ${rankTopClass}`;
+                row.style.animationDelay = `${index * 0.03}s`;
+                row.innerHTML = `
+                    <div class="rank-num">#${trader.rank}</div>
+                    <div class="trader-info">
+                        <div class="avatar">${initials(trader.name)}</div>
+                        <div class="trader-name">
+                            ${trader.name}
+                            <span class="role-badge">Samarpit</span>
+                        </div>
+                    </div>
+                    <div class="pnl-val ${pnlClass}"><span class="pnl-arrow">${arrow}</span>${trader.pnl}</div>
+                    <div>
+                        <span class="status-badge status-${trader.statusType}">${trader.statusText}</span>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function filterData(filterType, btnElement) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            if(btnElement) btnElement.classList.add('active');
+
+            if (filterType === 'all') {
+                renderBoard(traders);
+            } else if (filterType === 'green') {
+                renderBoard(traders.filter(t => t.pnlNumeric > 0));
+            } else if (filterType === 'honest') {
+                renderBoard(traders.filter(t => t.pnlNumeric < 0));
+            }
+        }
+
+        renderPodium();
+        renderBoard(traders);
+    </script>
+</body>
+</html>
