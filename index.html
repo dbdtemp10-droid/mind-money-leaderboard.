@@ -130,6 +130,18 @@
         .status-verified { background: var(--green-dim); color: var(--green); border: 1px solid rgba(16, 224, 138, 0.3); }
         .status-honest { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(229, 193, 88, 0.3); }
         .status-neutral { background: var(--neutral-dim); color: var(--text-main); border: 1px solid rgba(255, 255, 255, 0.2); }
+        
+        /* New Bursted Status Styling */
+        .status-bursted { 
+            background: rgba(255, 42, 68, 0.15); 
+            color: #ff334b; 
+            border: 1px solid rgba(255, 51, 75, 0.5);
+            font-size: 0.85rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 12px rgba(255, 51, 75, 0.3);
+            text-shadow: 0 0 8px rgba(255, 51, 75, 0.5);
+        }
 
         .code-box { background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 45px; text-align: center; max-width: 780px; margin: 0 auto; position: relative; overflow: hidden; }
         .code-box::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 180px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
@@ -180,7 +192,7 @@
                 <div class="metric-label">Capital Bracket</div>
             </div>
             <div class="metric-card">
-                <div class="metric-val">19</div>
+                <div class="metric-val">18</div>
                 <div class="metric-label">Active Challengers</div>
             </div>
             <div class="metric-card">
@@ -221,25 +233,24 @@
 
     <script>
         const traders = [
-            { rank: "01", name: "Nikhil Bansal", pnl: "+ ₹8,801.50", pnlNumeric: 8801.5, statusText: "100% Verified", statusType: "verified" },
-            { rank: "02", name: "Vishi", pnl: "+ ₹3,679", pnlNumeric: 3679, statusText: "100% Verified", statusType: "verified" },
-            { rank: "03", name: "Salender Singh", pnl: "+ ₹3,227.25", pnlNumeric: 3227.25, statusText: "100% Verified", statusType: "verified" },
-            { rank: "04", name: "Dr Pritesh", pnl: "+ ₹1,048.5", pnlNumeric: 1048.5, statusText: "100% Verified", statusType: "verified" },
-            { rank: "05", name: "Sneha", pnl: "+ ₹302.5", pnlNumeric: 302.5, statusText: "100% Verified", statusType: "verified" },
-            { rank: "06", name: "Waseem", pnl: "- ₹151.75", pnlNumeric: -151.75, statusText: "Honest Loss", statusType: "honest" },
-            { rank: "07", name: "Anjana thakur", pnl: "- ₹728", pnlNumeric: -728, statusText: "Honest Loss", statusType: "honest" },
-            { rank: "08", name: "Aakaash Jw", pnl: "- ₹1,279", pnlNumeric: -1279.5, statusText: "Honest Loss", statusType: "honest" },
-            { rank: "09", name: "Nishi", pnl: "- ₹1,681.5", pnlNumeric: -1681.5, statusText: "Honest Loss", statusType: "honest" },
-            { rank: "10", name: "Shrihari", pnl: "- ₹1,875", pnlNumeric: -1875, statusText: "Honest Loss", statusType: "honest" },
-            { rank: "11", name: "Pratik Nigade", pnl: "- ₹4,757", pnlNumeric: -4757, statusText: "Honest Loss", statusType: "honest" },
-            { rank: "12", name: "Sudhakar", pnl: "- ₹5,907.55", pnlNumeric: -5907.55, statusText: "Honest Loss", statusType: "honest" },
-            { rank: "13", name: "Govind yadav", pnl: "- ₹8,003.50", pnlNumeric: -8003.50, statusText: "Honest Loss", statusType: "honest" },
-            { rank: "14", name: "Ibhrahim", pnl: "₹0", pnlNumeric: 0, statusText: "No-Trade", statusType: "neutral" },
-            { rank: "15", name: "Ashok Gehlot", pnl: "₹0", pnlNumeric: 0, statusText: "No-Trade", statusType: "neutral" },
-            { rank: "16", name: "Sachin Patel", pnl: "₹0", pnlNumeric: 0, statusText: "No-Trade", statusType: "neutral" },
-            { rank: "17", name: "Rahul Kushwaha", pnl: "₹0", pnlNumeric: 0, statusText: "No-Trade", statusType: "neutral" },
-            { rank: "18", name: "Karan", pnl: "₹0", pnlNumeric: 0, statusText: "No-Trade", statusType: "neutral" },
-            { rank: "19", name: "Divya Biharini Das", pnl: "₹0", pnlNumeric: 0, statusText: "No-Trade", statusType: "neutral" }
+            { rank: "01", name: "Nikhil Bansal", pnl: "+ ₹21,188.09", pnlNumeric: 21188.09, statusText: "100% Verified", statusType: "verified" },
+            { rank: "02", name: "Ashok Gehlot", pnl: "+ ₹7,355.90", pnlNumeric: 7355.9, statusText: "100% Verified", statusType: "verified" },
+            { rank: "03", name: "Sneha", pnl: "+ ₹5,672", pnlNumeric: 5672, statusText: "100% Verified", statusType: "verified" },
+            { rank: "04", name: "Vishi", pnl: "+ ₹4,442.75", pnlNumeric: 4442.75, statusText: "100% Verified", statusType: "verified" },
+            { rank: "05", name: "Shrihari", pnl: "+ ₹1,744.02", pnlNumeric: 1744.02, statusText: "100% Verified", statusType: "verified" },
+            { rank: "06", name: "Waseem", pnl: "+ ₹1,485.25", pnlNumeric: 1485.25, statusText: "100% Verified", statusType: "verified" },
+            { rank: "07", name: "Dr Pritesh", pnl: "+ ₹886", pnlNumeric: 886, statusText: "100% Verified", statusType: "verified" },
+            { rank: "08", name: "Sachin Patel", pnl: "+ ₹250.25", pnlNumeric: 250.25, statusText: "100% Verified", statusType: "verified" },
+            { rank: "09", name: "Aakaash Jw", pnl: "+ ₹121.50", pnlNumeric: 121.5, statusText: "100% Verified", statusType: "verified" },
+            { rank: "10", name: "Nishi", pnl: "- ₹288.25", pnlNumeric: -288.25, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "11", name: "Anjana thakur", pnl: "- ₹317", pnlNumeric: -317, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "12", name: "Salender singh", pnl: "- ₹2,009.50", pnlNumeric: -2009.5, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "13", name: "Pratik Nigade", pnl: "- ₹2,245.75", pnlNumeric: -2245.75, statusText: "BURSTED", statusType: "bursted" },
+            { rank: "14", name: "Govind yadav", pnl: "- ₹4,520", pnlNumeric: -4520, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "15", name: "Sudhakar", pnl: "- ₹6,833", pnlNumeric: -6833, statusText: "Honest Loss", statusType: "honest" },
+            { rank: "16", name: "Ibhrahim", pnl: "₹0", pnlNumeric: 0, statusText: "No-Trade", statusType: "neutral" },
+            { rank: "17", name: "Rahul Kushwaha", pnl: "₹0", pnlNumeric: 0, statusText: "BURSTED", statusType: "bursted" },
+            { rank: "18", name: "Karan", pnl: "₹0", pnlNumeric: 0, statusText: "BURSTED", statusType: "bursted" }
         ];
 
         function initials(name) {
@@ -247,7 +258,7 @@
         }
 
         function renderPodium() {
-            const sorted = [...traders].filter(t => t.name !== "Divya Biharini Das").sort((a,b) => b.pnlNumeric - a.pnlNumeric).slice(0,3);
+            const sorted = [...traders].sort((a,b) => b.pnlNumeric - a.pnlNumeric).slice(0,3);
             const medals = ['🥇','🥈','🥉'];
             const classes = ['rank1','rank2','rank3'];
             const container = document.getElementById('podium-container');
